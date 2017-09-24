@@ -15,15 +15,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
 
-    // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
 
-    // Database Name
-    private static final String DATABASE_NAME = "sqllite_database";//database ad�
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "sqllite_database";
 
     private static final String TABLE_NAME = "student_list";
-    private static String STUDENT_NAME = "kitap_adi";
+    private static String STUDENT_NAME = "student_name";
     private static String STUDENT_ID = "id";
 
 
@@ -33,7 +30,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {  // Databesi olu�turuyoruz.Bu methodu biz �a��rm�yoruz. Databese de obje olu�turdu�umuzda otamatik �a��r�l�yor.
+    public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + STUDENT_NAME + " TEXT" + ")";
@@ -43,10 +40,10 @@ public class Database extends SQLiteOpenHelper {
 
 
 
-    public void addStudent(String kitap_adi) {
+    public void addStudent(String student_name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(STUDENT_NAME, kitap_adi);
+        values.put(STUDENT_NAME, student_name);
 
         db.insert(TABLE_NAME, null, values);
         db.close();
@@ -59,7 +56,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
-        ArrayList<HashMap<String, String>> kitaplist = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> studentlist = new ArrayList<HashMap<String, String>>();
 
         if (cursor.moveToFirst()) {
             do {
@@ -69,11 +66,11 @@ public class Database extends SQLiteOpenHelper {
                     map.put(cursor.getColumnName(i), cursor.getString(i));
                 }
 
-                kitaplist.add(map);
+                studentlist.add(map);
             } while (cursor.moveToNext());
         }
         db.close();
-        return kitaplist;
+        return studentlist;
     }
 
 

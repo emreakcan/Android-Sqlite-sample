@@ -15,15 +15,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseEvents extends SQLiteOpenHelper {
 
-    // All Static variables
-    // Database Version
     private static final int DATABASE_VERSION = 1;
 
-    // Database Name
-    private static final String DATABASE_NAME = "events";//database ad�
+    private static final String DATABASE_NAME = "events";
 
-    private static final String TABLE_NAME = "student_list";
-    private static String STUDENT_NAME = "kitap_adi";
+    private static final String TABLE_NAME = "events";
+    private static String STUDENT_NAME = "event_name";
     private static String STUDENT_ID = "id";
 
 
@@ -33,7 +30,7 @@ public class DatabaseEvents extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {  // Databesi olu�turuyoruz.Bu methodu biz �a��rm�yoruz. Databese de obje olu�turdu�umuzda otamatik �a��r�l�yor.
+    public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + STUDENT_NAME + " TEXT" + ")";

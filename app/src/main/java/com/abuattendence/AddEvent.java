@@ -20,11 +20,11 @@ import java.util.HashMap;
 public class AddEvent extends AppCompatActivity {
     ListView lv;
     ArrayAdapter<String> adapter;
-    ArrayList<HashMap<String, String>> kitap_liste;
-    String kitap_adlari[];
+    ArrayList<HashMap<String, String>> student_list;
+    String student_names[];
     public SharedPreferences preferences;
     public SharedPreferences.Editor editor;
-    int kitap_idler[];
+    int student_id[];
     private Button save;
     private EditText eventname;
     private String attendance = "";
@@ -44,7 +44,7 @@ public class AddEvent extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatabaseEvents db = new DatabaseEvents(getApplicationContext());
-                db.test1(eventname.getText().toString());//kitap ekledik
+                db.test1(eventname.getText().toString());
                 db.close();
                 Toast.makeText(getApplicationContext(), "EVENT ADDED", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(AddEvent.this, MainActivity.class);
@@ -60,20 +60,20 @@ public class AddEvent extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Database db = new Database(getApplicationContext());
-        kitap_liste = db.students();
-        if (kitap_liste.size() == 0) {
-            Toast.makeText(getApplicationContext(), "Hen�z Kitap Eklenmemi�.\nYukar�daki + Butonundan Ekleyiniz", Toast.LENGTH_LONG).show();
+        student_list = db.students();
+        if (student_list.size() == 0) {
+            Toast.makeText(getApplicationContext(), "EVENT NOT FOUND", Toast.LENGTH_LONG).show();
         } else {
-            kitap_adlari = new String[kitap_liste.size()]; // kitap adlar�n� tutucam�z string arrayi olusturduk.
-            kitap_idler = new int[kitap_liste.size()]; // kitap id lerini tutucam�z string arrayi olusturduk.
-            for (int i = 0; i < kitap_liste.size(); i++) {
-                kitap_adlari[i] = kitap_liste.get(i).get("kitap_adi");
+            student_names = new String[student_list.size()];
+            student_id = new int[student_list.size()];
+            for (int i = 0; i < student_list.size(); i++) {
+                student_names[i] = student_list.get(i).get("student_name");
 
-                kitap_idler[i] = Integer.parseInt(kitap_liste.get(i).get("id"));
+                student_id[i] = Integer.parseInt(student_list.get(i).get("id"));
             }
             lv = (ListView) findViewById(R.id.studentList);
 
-            adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.kitap_adi, kitap_adlari);
+            adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.kitap_adi, student_names);
             lv.setAdapter(adapter);
 
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

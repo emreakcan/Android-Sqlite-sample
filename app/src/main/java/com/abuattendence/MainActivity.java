@@ -55,40 +55,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onResume() {   //neden onResume metodu kulland���m� ders i�inde anlatt�m.
+    public void onResume() {
         super.onResume();
         eventList();
     }
 
-    private void toList() {
-        Database db = new Database(getApplicationContext()); // Db ba�lant�s� olu�turuyoruz. �lk seferde database olu�turulur.
-        kitap_liste = db.students();//kitap listesini al�yoruz
-        if (kitap_liste.size() == 0) {//kitap listesi bo�sa
-            Toast.makeText(getApplicationContext(), "Student not found", Toast.LENGTH_LONG).show();
-        } else {
-            kitap_adlari = new String[kitap_liste.size()]; // kitap adlar�n� tutucam�z string arrayi olusturduk.
-            kitap_idler = new int[kitap_liste.size()]; // kitap id lerini tutucam�z string arrayi olusturduk.
-            for (int i = 0; i < kitap_liste.size(); i++) {
-                kitap_adlari[i] = kitap_liste.get(i).get("kitap_adi");
-                kitap_idler[i] = Integer.parseInt(kitap_liste.get(i).get("id"));
-            }
-            lv = (ListView) findViewById(R.id.studentlist);
 
-            adapter = new ArrayAdapter<String>(this, R.layout.list_item, R.id.kitap_adi, kitap_adlari);
-            lv.setAdapter(adapter);
-        }
-    }
 
     private void eventList() {
         DatabaseEvents db = new DatabaseEvents(getApplicationContext());
         kitap_liste = db.test();
         if (kitap_liste.size() == 0) {
-            Toast.makeText(getApplicationContext(), "EVENT NOT FOUND", Toast.LENGTH_LONG).show();
+            //event not found
         } else {
             kitap_adlari = new String[kitap_liste.size()];
             kitap_idler = new int[kitap_liste.size()];
             for (int i = 0; i < kitap_liste.size(); i++) {
-                kitap_adlari[i] = kitap_liste.get(i).get("kitap_adi");
+                kitap_adlari[i] = kitap_liste.get(i).get("event_name");
                 kitap_idler[i] = Integer.parseInt(kitap_liste.get(i).get("id"));
             }
 
@@ -126,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addStudent() {
         Database db = new Database(getApplicationContext());
-        db.addStudent(studentname.getText().toString());//kitap ekledik
+        db.addStudent(studentname.getText().toString());
         db.close();
         Toast.makeText(getApplicationContext(), "STUDENT ADDED", Toast.LENGTH_LONG).show();
 
